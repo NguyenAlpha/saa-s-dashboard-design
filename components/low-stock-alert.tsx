@@ -1,8 +1,11 @@
+'use client'
+
 import { AlertTriangle, ArrowUpRight } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { statusColorMap } from "@/lib/status-colors"
+import { useLanguage } from "@/lib/language-context"
 
 const lowStockProducts = [
   {
@@ -32,6 +35,35 @@ const lowStockProducts = [
 ]
 
 export function LowStockAlert() {
+  const { t } = useLanguage()
+
+  const lowStockProducts = [
+    {
+      name: "Wireless Headphones Pro",
+      sku: "WHP-001",
+      current: 5,
+      minimum: 20,
+    },
+    {
+      name: "USB-C Hub 7-in-1",
+      sku: "UCH-007",
+      current: 8,
+      minimum: 25,
+    },
+    {
+      name: "Mechanical Keyboard",
+      sku: "MKB-102",
+      current: 3,
+      minimum: 15,
+    },
+    {
+      name: "4K Webcam",
+      sku: "WEB-4K1",
+      current: 12,
+      minimum: 30,
+    },
+  ]
+
   return (
     <Card className="flex h-full flex-col">
       <CardHeader className="pb-4">
@@ -41,14 +73,14 @@ export function LowStockAlert() {
               <AlertTriangle className={`size-4 ${statusColorMap.warning.icon}`} />
             </div>
             <div className="space-y-0.5">
-              <CardTitle className="text-base font-medium">Low Stock</CardTitle>
+              <CardTitle className="text-base font-medium">{t.lowStock.title}</CardTitle>
               <p className="text-sm text-muted-foreground">
-                {lowStockProducts.length} items need attention
+                {lowStockProducts.length} {t.lowStock.itemsNeedAttention}
               </p>
             </div>
           </div>
           <Button variant="ghost" size="sm" className="gap-1 text-sm text-muted-foreground hover:text-foreground">
-            View all
+            {t.common.viewAll}
             <ArrowUpRight className="size-4" />
           </Button>
         </div>
@@ -66,7 +98,7 @@ export function LowStockAlert() {
                       {product.name}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      SKU: {product.sku}
+                      {t.lowStock.sku}: {product.sku}
                     </p>
                   </div>
                   <div className="text-right">
@@ -74,7 +106,7 @@ export function LowStockAlert() {
                       {product.current}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      of {product.minimum}
+                      {t.lowStock.of} {product.minimum}
                     </p>
                   </div>
                 </div>

@@ -14,8 +14,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageSwitcher } from "@/components/language-switcher"
+import { useLanguage } from "@/lib/language-context"
 
 export function DashboardHeader() {
+  const { t } = useLanguage()
+
   return (
     <header className="flex h-16 shrink-0 items-center gap-3 border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <SidebarTrigger className="-ml-2" />
@@ -24,14 +28,15 @@ export function DashboardHeader() {
       <div className="flex flex-1 items-center gap-4">
         <button className="group flex h-9 w-full max-w-sm items-center gap-2 rounded-lg border bg-muted/40 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted/60">
           <Search className="size-4" />
-          <span className="flex-1 text-left">Search products, orders...</span>
+          <span className="flex-1 text-left">{t.header.search}</span>
           <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground sm:flex">
             <Command className="size-3" />K
           </kbd>
         </button>
       </div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
+        <LanguageSwitcher />
         <ThemeToggle />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -41,13 +46,13 @@ export function DashboardHeader() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-blue-400 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-blue-500" />
               </span>
-              <span className="sr-only">Notifications</span>
+              <span className="sr-only">{t.header.notifications}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80">
             <DropdownMenuLabel className="font-normal">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold">Notifications</span>
+                <span className="text-sm font-semibold">{t.header.notifications}</span>
                 <span className="text-xs text-muted-foreground">3 unread</span>
               </div>
             </DropdownMenuLabel>
@@ -106,7 +111,7 @@ export function DashboardHeader() {
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-red-600 focus:text-red-600">
-              Log out
+              {t.common.logout}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

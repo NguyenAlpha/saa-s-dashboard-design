@@ -1,17 +1,22 @@
+'use client'
+
 import { KpiCards } from "@/components/kpi-cards"
 import { SalesChart } from "@/components/sales-chart"
 import { RecentOrders } from "@/components/recent-orders"
 import { LowStockAlert } from "@/components/low-stock-alert"
+import { useLanguage } from "@/lib/language-context"
 
 export default function DashboardPage() {
+  const { t } = useLanguage()
+
   return (
     <div className="flex flex-1 flex-col gap-8 p-8 lg:p-10">
       <div className="space-y-1">
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-          Dashboard
+          {t.dashboard.title}
         </h1>
         <p className="text-base text-muted-foreground">
-          Welcome back! Here&apos;s an overview of your inventory and sales.
+          {t.dashboard.subtitle}
         </p>
       </div>
 

@@ -5,6 +5,7 @@ import './globals.css'
 import { Inter as V0_Font_Inter, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { ThemeProvider } from "@/components/theme-provider"
+import { LanguageProvider } from "@/lib/language-context"
 
 // Initialize fonts
 const _inter = V0_Font_Inter({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
@@ -48,9 +49,11 @@ export default function RootLayout({
           enableSystem
           storageKey="theme-preference"
         >
-          <DashboardLayout>
-            {children}
-          </DashboardLayout>
+          <LanguageProvider>
+            <DashboardLayout>
+              {children}
+            </DashboardLayout>
+          </LanguageProvider>
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

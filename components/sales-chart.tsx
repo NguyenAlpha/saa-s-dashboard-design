@@ -3,6 +3,7 @@
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { useLanguage } from "@/lib/language-context"
 
 const salesData = [
   { month: "Jan", revenue: 18600 },
@@ -27,20 +28,22 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function SalesChart() {
+  const { t } = useLanguage()
+
   return (
     <Card className="h-full">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-base font-medium">Sales Overview</CardTitle>
+            <CardTitle className="text-base font-medium">{t.salesChart.title}</CardTitle>
             <p className="text-sm text-muted-foreground">
-              Monthly revenue trends for 2024
+              {t.salesChart.subtitle}
             </p>
           </div>
           <div className="flex items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
               <span className="size-2.5 rounded-full bg-[hsl(var(--chart-1))]" />
-              <span className="text-muted-foreground">Revenue</span>
+              <span className="text-muted-foreground">{t.salesChart.revenue}</span>
             </div>
           </div>
         </div>

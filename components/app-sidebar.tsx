@@ -34,40 +34,41 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useLanguage } from "@/lib/language-context"
 
 const menuItems = [
   {
-    title: "Dashboard",
+    titleKey: "overview" as const,
     url: "/",
     icon: LayoutDashboard,
   },
   {
-    title: "Products",
+    titleKey: "products" as const,
     url: "/products",
     icon: Package,
   },
   {
-    title: "Inventory",
+    titleKey: "inventory" as const,
     url: "/inventory",
     icon: Warehouse,
   },
   {
-    title: "Orders",
+    titleKey: "orders" as const,
     url: "/orders",
     icon: ShoppingCart,
   },
   {
-    title: "Customers",
+    titleKey: "customers" as const,
     url: "/customers",
     icon: Users,
   },
   {
-    title: "Suppliers",
+    titleKey: "suppliers" as const,
     url: "/suppliers",
     icon: Truck,
   },
   {
-    title: "Payments",
+    titleKey: "payments" as const,
     url: "/payments",
     icon: CreditCard,
   },
@@ -81,6 +82,7 @@ const stores = [
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const { t } = useLanguage()
 
   return (
     <Sidebar collapsible="icon">
@@ -126,21 +128,21 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-medium uppercase tracking-wider text-sidebar-foreground/50">
-            Menu
+            {t.navigation && Object.keys(t.navigation).length > 0 ? "Menu" : "Menu"}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton
                     asChild
                     isActive={pathname === item.url}
-                    tooltip={item.title}
+                    tooltip={item.titleKey}
                     className="transition-colors"
                   >
                     <Link href={item.url}>
                       <item.icon className="size-4" />
-                      <span>{item.title}</span>
+                      <span>{(t.navigation as any)[item.titleKey] || item.titleKey}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -155,7 +157,7 @@ export function AppSidebar() {
             <SidebarMenuButton asChild tooltip="Settings" className="transition-colors">
               <Link href="/settings">
                 <Settings className="size-4" />
-                <span>Settings</span>
+                <span>{t.common.settings}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
