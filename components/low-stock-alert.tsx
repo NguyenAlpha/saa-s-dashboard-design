@@ -2,6 +2,7 @@ import { AlertTriangle, ArrowUpRight } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
+import { statusColorMap } from "@/lib/status-colors"
 
 const lowStockProducts = [
   {
@@ -36,8 +37,8 @@ export function LowStockAlert() {
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex size-9 items-center justify-center rounded-full bg-amber-50 dark:bg-amber-950">
-              <AlertTriangle className="size-4 text-amber-600 dark:text-amber-400" />
+            <div className={`flex size-9 items-center justify-center rounded-full ${statusColorMap.warning.bg}`}>
+              <AlertTriangle className={`size-4 ${statusColorMap.warning.icon}`} />
             </div>
             <div className="space-y-0.5">
               <CardTitle className="text-base font-medium">Low Stock</CardTitle>
@@ -69,7 +70,7 @@ export function LowStockAlert() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className={`text-sm font-semibold tabular-nums ${isLow ? "text-red-600 dark:text-red-400" : ""}`}>
+                    <p className={`text-sm font-semibold tabular-nums ${isLow ? statusColorMap.error.text : ""}`}>
                       {product.current}
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -79,7 +80,7 @@ export function LowStockAlert() {
                 </div>
                 <Progress
                   value={percentage}
-                  className={`h-1.5 ${isLow ? "[&>div]:bg-red-500" : "[&>div]:bg-amber-500"}`}
+                  className={`h-1.5 ${isLow ? statusColorMap.error.progressBar : statusColorMap.warning.progressBar}`}
                 />
               </div>
             )

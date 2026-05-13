@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { statusColorMap } from "@/lib/status-colors"
 
 const recentOrders = [
   {
@@ -48,19 +49,10 @@ const recentOrders = [
   },
 ]
 
-const statusStyles: Record<string, { variant: "default" | "secondary" | "outline"; className: string }> = {
-  completed: { 
-    variant: "secondary", 
-    className: "bg-emerald-50 text-emerald-700 hover:bg-emerald-50 dark:bg-emerald-950 dark:text-emerald-400" 
-  },
-  processing: { 
-    variant: "secondary", 
-    className: "bg-blue-50 text-blue-700 hover:bg-blue-50 dark:bg-blue-950 dark:text-blue-400" 
-  },
-  pending: { 
-    variant: "secondary", 
-    className: "bg-amber-50 text-amber-700 hover:bg-amber-50 dark:bg-amber-950 dark:text-amber-400" 
-  },
+const statusStyleMap: Record<string, keyof typeof statusColorMap> = {
+  completed: "completed",
+  processing: "processing",
+  pending: "pending",
 }
 
 function getInitials(name: string) {
@@ -110,40 +102,44 @@ export function RecentOrders() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {recentOrders.map((order) => (
-              <TableRow key={order.id} className="group cursor-pointer">
-                <TableCell className="pl-6">
-                  <span className="font-mono text-sm font-medium">{order.id}</span>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-3">
-                    <Avatar className="size-9 border">
-                      <AvatarFallback className="bg-muted text-xs font-medium">
-                        {getInitials(order.customer)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium">{order.customer}</span>
-                      <span className="text-xs text-muted-foreground">{order.email}</span>
+            {recentOrders.map((order) => {
+              const statusKey = statusStyleMap[order.status as keyof typeof statusStyleMap] || "neutral"
+              const colors = statusColorMap[statusKey]
+              return (
+                <TableRow key={order.id} className="group cursor-pointer">
+                  <TableCell className="pl-6">
+                    <span className="font-mono text-sm font-medium">{order.id}</span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="size-9 border">
+                        <AvatarFallback className="bg-muted text-xs font-medium">
+                          {getInitials(order.customer)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">{order.customer}</span>
+                        <span className="text-xs text-muted-foreground">{order.email}</span>
+                      </div>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm text-muted-foreground">{order.date}</span>
-                </TableCell>
-                <TableCell>
-                  <Badge 
-                    variant={statusStyles[order.status].variant} 
-                    className={`capitalize ${statusStyles[order.status].className}`}
-                  >
-                    {order.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="pr-6 text-right">
-                  <span className="font-mono text-sm font-semibold">{order.total}</span>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm text-muted-foreground">{order.date}</span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge 
+                      variant="secondary" 
+                      className={`capitalize ${colors.badge}`}
+                    >
+                      {order.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="pr-6 text-right">
+                    <span className="font-mono text-sm font-semibold">{order.total}</span>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </CardContent>

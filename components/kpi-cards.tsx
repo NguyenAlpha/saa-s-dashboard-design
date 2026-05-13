@@ -1,5 +1,6 @@
 import { DollarSign, ShoppingCart, Package, Users, TrendingUp, TrendingDown } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
+import { statusColorMap } from "@/lib/status-colors"
 
 const kpiData = [
   {
@@ -56,8 +57,8 @@ export function KpiCards() {
                 <span
                   className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
                     kpi.trend === "up"
-                      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
-                      : "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400"
+                      ? statusColorMap.completed.badge
+                      : statusColorMap.error.badge
                   }`}
                 >
                   {kpi.trend === "up" ? (
