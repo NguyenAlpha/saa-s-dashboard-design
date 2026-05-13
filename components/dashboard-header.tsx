@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export function DashboardHeader() {
   return (
@@ -31,6 +32,7 @@ export function DashboardHeader() {
       </div>
 
       <div className="flex items-center gap-1">
+        <ThemeToggle />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative size-9">
