@@ -103,94 +103,95 @@ export function PurchaseOrdersTable({
             const isExpanded = expandedRows.has(po.id)
             const statusBadge = getStatusBadge(po.status)
             return (
-              <tbody key={po.id}>
-                <TableRow className="group">
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="size-8 p-0"
-                      onClick={() => toggleRow(po.id)}
-                    >
-                      <ChevronDown
-                        className={`size-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-                      />
-                    </Button>
-                  </TableCell>
-                  <TableCell className="pl-6">
-                    <span className="font-medium">{po.poNumber}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground">{po.supplierName}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground">{po.orderDate}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground">{po.expectedDeliveryDate}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm font-medium">{po.items.length} {t.purchaseOrders.itemsCount}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="font-mono text-sm font-semibold">${po.totalAmount.toLocaleString()}</span>
-                  </TableCell>
-                  <TableCell>
-                    <Select value={po.status} onValueChange={(value: any) => onStatusChange(po.id, value)}>
-                      <SelectTrigger className="w-32 h-8">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">{t.purchaseOrders.pending}</SelectItem>
-                        <SelectItem value="received">{t.purchaseOrders.received}</SelectItem>
-                        <SelectItem value="completed">{t.purchaseOrders.completed}</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
-                  <TableCell className="pr-6 text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="size-8 opacity-0 group-hover:opacity-100"
-                      onClick={() => handleDelete(po.id)}
-                      disabled={isDeleting === po.id}
-                    >
-                      <Trash2 className="size-4 text-red-600" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-
-                {isExpanded && (
-                  <TableRow>
-                    <TableCell colSpan={9} className="bg-muted/30 p-4">
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="font-semibold mb-2">{t.purchaseOrders.items}</h4>
-                          <div className="space-y-2 text-sm">
-                            {po.items.map((item) => (
-                              <div key={item.id} className="flex justify-between items-center">
-                                <span>{item.productName}</span>
-                                <div className="flex gap-8">
-                                  <span className="text-muted-foreground">Qty: {item.quantity}</span>
-                                  <span className="text-muted-foreground">${item.unitPrice.toFixed(2)}</span>
-                                  <span className="font-medium">${item.totalPrice.toFixed(2)}</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        {po.notes && (
-                          <div>
-                            <h4 className="font-semibold mb-1 text-sm">{t.purchaseOrders.notes}</h4>
-                            <p className="text-sm text-muted-foreground">{po.notes}</p>
-                          </div>
-                        )}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
-              </tbody>
+              <TableRow key={po.id} className="group">
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="size-8 p-0"
+                    onClick={() => toggleRow(po.id)}
+                  >
+                    <ChevronDown
+                      className={`size-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                    />
+                  </Button>
+                </TableCell>
+                <TableCell className="pl-6">
+                  <span className="font-medium">{po.poNumber}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm text-muted-foreground">{po.supplierName}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm text-muted-foreground">{po.orderDate}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm text-muted-foreground">{po.expectedDeliveryDate}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm font-medium">{po.items.length} {t.purchaseOrders.itemsCount}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="font-mono text-sm font-semibold">${po.totalAmount.toLocaleString()}</span>
+                </TableCell>
+                <TableCell>
+                  <Select value={po.status} onValueChange={(value: any) => onStatusChange(po.id, value)}>
+                    <SelectTrigger className="w-32 h-8">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending">{t.purchaseOrders.pending}</SelectItem>
+                      <SelectItem value="received">{t.purchaseOrders.received}</SelectItem>
+                      <SelectItem value="completed">{t.purchaseOrders.completed}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </TableCell>
+                <TableCell className="pr-6 text-right">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 opacity-0 group-hover:opacity-100"
+                    onClick={() => handleDelete(po.id)}
+                    disabled={isDeleting === po.id}
+                  >
+                    <Trash2 className="size-4 text-red-600" />
+                  </Button>
+                </TableCell>
+              </TableRow>
             )
+          })}
+
+          {purchaseOrders.length > 0 && purchaseOrders.map((po) => {
+            const isExpanded = expandedRows.has(po.id)
+            return isExpanded ? (
+              <TableRow key={`${po.id}-expanded`}>
+                <TableCell colSpan={9} className="bg-muted/30 p-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">{t.purchaseOrders.items}</h4>
+                      <div className="space-y-2 text-sm">
+                        {po.items.map((item) => (
+                          <div key={item.id} className="flex justify-between items-center">
+                            <span>{item.productName}</span>
+                            <div className="flex gap-8">
+                              <span className="text-muted-foreground">Qty: {item.quantity}</span>
+                              <span className="text-muted-foreground">${item.unitPrice.toFixed(2)}</span>
+                              <span className="font-medium">${item.totalPrice.toFixed(2)}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    {po.notes && (
+                      <div>
+                        <h4 className="font-semibold mb-1 text-sm">{t.purchaseOrders.notes}</h4>
+                        <p className="text-sm text-muted-foreground">{po.notes}</p>
+                      </div>
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : null
           })}
         </TableBody>
       </Table>
