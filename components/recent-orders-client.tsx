@@ -22,6 +22,8 @@ interface RecentOrdersClientProps {
   orders: Order[]
 }
 
+export type { Order }
+
 const statusStyleMap: Record<string, keyof typeof statusColorMap> = {
   completed: "completed",
   processing: "processing",

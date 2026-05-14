@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { statusColorMap } from "@/lib/status-colors"
 import { RecentOrdersClient } from "@/components/recent-orders-client"
+import type { Order } from "@/components/recent-orders-client"
 
 const recentOrders = [
   {
@@ -51,7 +52,7 @@ const recentOrders = [
 ]
 
 export function RecentOrders() {
-  const recentOrders = [
+  const recentOrders: Order[] = [
     {
       id: "ORD-7892",
       customer: "Emily Chen",

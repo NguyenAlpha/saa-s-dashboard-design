@@ -27,6 +27,7 @@ export const statusColorMap = {
     text: "text-orange-700 dark:text-orange-300",
     badge: "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300",
     icon: "text-orange-600 dark:text-orange-400",
+    progressBar: "[&>div]:bg-orange-500 dark:[&>div]:bg-orange-400",
   },
   error: {
     bg: "bg-red-50/80 dark:bg-red-950/40",
