@@ -11,6 +11,7 @@ import {
   Settings,
   ChevronDown,
   Sparkles,
+  FileText,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -66,6 +67,11 @@ const menuItems = [
     titleKey: "suppliers" as const,
     url: "/suppliers",
     icon: Truck,
+  },
+  {
+    titleKey: "purchaseOrders" as const,
+    url: "/purchase-orders",
+    icon: FileText,
   },
   {
     titleKey: "payments" as const,

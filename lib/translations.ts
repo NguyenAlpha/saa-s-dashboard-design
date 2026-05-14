@@ -36,6 +36,7 @@ export const translations = {
       team: "Team",
       settings: "Settings",
       reports: "Reports",
+      purchaseOrders: "Purchase Orders",
     },
     dashboard: {
       title: "Dashboard",
@@ -210,6 +211,7 @@ export const translations = {
       team: "Đội ngũ",
       settings: "Cài đặt",
       reports: "Báo cáo",
+      purchaseOrders: "Đơn nhập hàng",
     },
     dashboard: {
       title: "Bảng điều khiển",
